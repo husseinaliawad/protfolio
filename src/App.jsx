@@ -41,6 +41,32 @@ const projects = [
       'Published a live Laravel project aligned with modern web application practices.',
     tech: ['Laravel', 'PHP', 'Blade', 'MySQL', 'REST APIs'],
     demo: 'https://www.halmanhaj.com/'
+  },
+  {
+    title: 'Modakir',
+    description:
+      'Full Laravel platform I built end-to-end, including architecture, views, and backend logic.',
+    problem:
+      'Needed a complete, reliable platform with clean navigation and maintainable structure.',
+    solution:
+      'Implemented the entire project using Laravel, Blade, PHP, and MySQL with organized code and production-ready flow.',
+    impact:
+      'Launched a complete Laravel website fully built by me from scratch.',
+    tech: ['Laravel', 'PHP', 'Blade', 'MySQL', 'JavaScript'],
+    demo: 'https://modakir.com/'
+  },
+  {
+    title: 'MyStore2',
+    description:
+      'Laravel-based website developed with full-stack implementation and deployment-ready structure.',
+    problem:
+      'Required a practical web solution with stable backend behavior and clear user experience.',
+    solution:
+      'Built the system using Laravel MVC architecture, Blade templates, and MySQL database integration.',
+    impact:
+      'Delivered another live Laravel project with complete custom development.',
+    tech: ['Laravel', 'PHP', 'Blade', 'MySQL', 'APIs'],
+    demo: 'https://mystore2.com/'
   }
 ];
 
