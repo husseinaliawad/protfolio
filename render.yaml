@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: hussein-portfolio
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /

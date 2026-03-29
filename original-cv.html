@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Full Stack Developer Portfolio - Building scalable, high-performance web applications">
+    <title>Alex Chen | Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-elevated: #12121a;
+            --fg: #e8e8ed;
+            --muted: #6b6b7b;
+            --accent: #00d4aa;
+            --accent-dim: rgba(0, 212, 170, 0.1);
+            --card: #16161f;
+            --border: #2a2a3a;
+            --gradient-start: #00d4aa;
+            --gradient-end: #00a3ff;
+        }
+
+        .light-mode {
+            --bg: #fafafa;
+            --bg-elevated: #ffffff;
+            --fg: #0a0a0f;
+            --muted: #6b6b7b;
+            --accent: #00b894;
+            --accent-dim: rgba(0, 184, 148, 0.1);
+            --card: #ffffff;
+            --border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Background effects */
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(42, 42, 58, 0.3) 1px, transparent 1px),
+                linear-gradient(rgba(42, 42, 58, 0.3) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .light-mode .bg-grid {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        }
+
+        /* Gradient orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, var(--gradient-start), transparent);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--gradient-end), transparent);
+            bottom: 20%;
+            left: -100px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent), transparent);
+            top: 50%;
+            right: 10%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 10px) scale(1.02); }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .orb {
+                animation: none;
+            }
+        }
+
+        /* Card hover effects */
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px -20px rgba(0, 212, 170, 0.3);
+            border-color: var(--accent);
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: #0a0a0f;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px var(--accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--fg);
+            font-weight: 500;
+            padding: 14px 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        /* Tech badge */
+        .tech-badge {
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal styling */
+        .terminal {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: var(--card);
+            padding: 12px 16px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Typing cursor */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--accent);
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Nav */
+        .nav-link {
+            position: relative;
+            color: var(--muted);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--fg);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Stats counter */
+        .stat-number {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 24px;
+            width: 2px;
+            height: calc(100% - 12px);
+            background: var(--border);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        /* Glow effect */
+        .glow {
+            box-shadow: 0 0 60px -20px var(--accent);
+        }
+
+        /* Focus states */
+        *:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Particle canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Section styling */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--muted);
+        }
+
+        /* Image placeholder */
+        .img-placeholder {
+            background: linear-gradient(135deg, var(--card), var(--bg-elevated));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-grid">
+    <!-- Particles -->
+    <canvas id="particles"></canvas>
+
+    <!-- Gradient orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[var(--bg)]/80 border-b border-[var(--border)]">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="font-mono text-lg font-semibold" style="color: var(--accent);">AC_</a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about" class="nav-link text-sm">About</a>
+                <a href="#projects" class="nav-link text-sm">Projects</a>
+                <a href="#experience" class="nav-link text-sm">Experience</a>
+                <a href="#contact" class="nav-link text-sm">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="p-2 rounded-lg border border-[var(--border)] hover:border-[var(--accent)] transition-colors" aria-label="Toggle theme">
+                    <svg id="moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                    <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </button>
+                <a href="#contact" class="btn-primary text-sm hidden sm:block">Get in Touch</a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2" aria-label="Toggle menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--border)] bg-[var(--bg)]">
+            <div class="px-6 py-4 flex flex-col gap-4">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center pt-20">
+        <div class="max-w-6xl mx-auto px-6 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <div class="font-mono text-sm mb-4" style="color: var(--accent);">
+                        <span class="opacity-50">//</span> Full Stack Developer
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                        I build scalable,<br>
+                        <span style="color: var(--accent);">high-performance</span><br>
+                        web applications
+                    </h1>
+                    <p class="text-lg mb-8" style="color: var(--muted); max-width: 500px;">
+                        Transforming complex problems into elegant solutions. Specialized in building end-to-end systems that handle millions of requests while delivering exceptional user experiences.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#projects" class="btn-primary">View Projects</a>
+                        <a href="#contact" class="btn-secondary">Contact Me</a>
+                    </div>
+                    
+                    <!-- Quick stats -->
+                    <div class="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-[var(--border)]">
+                        <div>
+                            <div class="stat-number text-3xl font-bold">5+</div>
+                            <div class="text-sm" style="color: var(--muted);">Years Experience</div>
+                        </div>
+                        <div>
+                            <div class="stat-number text-3xl font-bold">50+</div>
+                            <div class="text-sm" style="color: var(--muted);">Projects Delivered</div>
+                        </div>
+                        <div>
+                            <div class="stat-number text-3xl font-bold">2M+</div>
+                            <div class="text-sm" style="color: var(--muted);">Users Served</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terminal -->
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <div class="terminal glow">
+                        <div class="terminal-header">
+                            <div class="terminal-dot" style="background: #ff5f57;"></div>
+                            <div class="terminal-dot" style="background: #ffbd2e;"></div>
+                            <div class="terminal-dot" style="background: #28c840;"></div>
+                            <span class="ml-4 text-xs font-mono" style="color: var(--muted);">alex@portfolio ~ %</span>
+                        </div>
+                        <div class="p-6 font-mono text-sm">
+                            <div class="mb-4">
+                                <span style="color: var(--accent);">const</span> <span style="color: #e8e8ed;">developer</span> = {
+                            </div>
+                            <div class="pl-4 mb-2">
+                                <span style="color: #7dd3fc;">name</span>: <span style="color: #fbbf24;">"Alex Chen"</span>,
+                            </div>
+                            <div class="pl-4 mb-2">
+                                <span style="color: #7dd3fc;">role</span>: <span style="color: #fbbf24;">"Full Stack Developer"</span>,
+                            </div>
+                            <div class="pl-4 mb-2">
+                                <span style="color: #7dd3fc;">passion</span>: <span style="color: #fbbf24;">"Building scalable systems"</span>,
+                            </div>
+                            <div class="pl-4 mb-4">
+                                <span style="color: #7dd3fc;">available</span>: <span style="color: var(--accent);">true</span>,
+                            </div>
+                            <div>};</div>
+                            <div class="mt-4" style="color: var(--muted);">
+                                <span id="typing-text"></span><span class="cursor"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal order-2 lg:order-1">
+                    <div class="relative">
+                        <div class="aspect-square rounded-2xl img-placeholder overflow-hidden border border-[var(--border)]">
+                            <div class="w-full h-full flex items-center justify-center">
+                                <svg class="w-32 h-32" style="color: var(--muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <!-- Floating badge -->
+                        <div class="absolute -bottom-4 -right-4 bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-2xl">
+                            <div class="font-mono text-xs mb-1" style="color: var(--muted);">Current Focus</div>
+                            <div class="font-semibold" style="color: var(--accent);">System Architecture</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal order-1 lg:order-2" style="transition-delay: 0.15s;">
+                    <div class="font-mono text-sm mb-4" style="color: var(--accent);">// About Me</div>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+                        Engineering solutions that scale
+                    </h2>
+                    <div class="space-y-4" style="color: var(--muted);">
+                        <p>
+                            I started coding at 15, building simple websites for local businesses. What began as curiosity evolved into a deep passion for solving complex engineering challenges. Today, I specialize in building full-stack applications that handle real-world scale.
+                        </p>
+                        <p>
+                            My approach combines technical rigor with product thinking. I don't just write code—I design systems that are maintainable, performant, and aligned with business objectives. Whether it's optimizing database queries that save milliseconds or architecting microservices that handle millions of requests, I focus on measurable impact.
+                        </p>
+                        <p>
+                            Currently based in San Francisco, I've worked with startups and enterprises alike, helping teams ship faster and scale confidently. I'm particularly passionate about developer tooling, real-time systems, and making complex technology accessible.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <a href="#" class="inline-flex items-center gap-2 font-medium transition-colors hover:text-[var(--accent)]" style="color: var(--fg);">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Download Resume
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="stack" class="py-24" style="background: var(--bg-elevated);">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <div class="font-mono text-sm mb-4" style="color: var(--accent);">// Tech Stack</div>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Technologies I work with</h2>
+                <p style="color: var(--muted); max-width: 600px; margin: 0 auto;">
+                    A carefully curated set of tools and technologies I use to build robust, scalable applications.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Frontend -->
+                <div class="reveal bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style="background: var(--accent-dim);">
+                        <svg class="w-6 h-6" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-3">Frontend</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">Next.js</span>
+                        <span class="tech-badge">Vue</span>
+                        <span class="tech-badge">TypeScript</span>
+                        <span class="tech-badge">Tailwind</span>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div class="reveal bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-all duration-300 hover:-translate-y-1" style="transition-delay: 0.1s;">
+                    <div class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style="background: var(--accent-dim);">
+                        <svg class="w-6 h-6" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-3">Backend</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">Express</span>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">GraphQL</span>
+                        <span class="tech-badge">REST APIs</span>
+                    </div>
+                </div>
+
+                <!-- Database -->
+                <div class="reveal bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-all duration-300 hover:-translate-y-1" style="transition-delay: 0.2s;">
+                    <div class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style="background: var(--accent-dim);">
+                        <svg class="w-6 h-6" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-3">Databases</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge">PostgreSQL</span>
+                        <span class="tech-badge">MongoDB</span>
+                        <span class="tech-badge">Redis</span>
+                        <span class="tech-badge">MySQL</span>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="reveal bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-all duration-300 hover:-translate-y-1" style="transition-delay: 0.3s;">
+                    <div class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style="background: var(--accent-dim);">
+                        <svg class="w-6 h-6" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-3">Tools & Cloud</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge">AWS</span>
+                        <span class="tech-badge">Docker</span>
+                        <span class="tech-badge">Git</span>
+                        <span class="tech-badge">Vercel</span>
+                        <span class="tech-badge">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <div class="font-mono text-sm mb-4" style="color: var(--accent);">// Featured Projects</div>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Work that speaks for itself</h2>
+                <p style="color: var(--muted); max-width: 600px; margin: 0 auto;">
+                    A selection of projects where I've delivered measurable impact through thoughtful engineering.
+                </p>
+            </div>
+
+            <div class="space-y-8" id="projects-container">
+                <!-- Projects will be rendered here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-24" style="background: var(--bg-elevated);">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Experience -->
+                <div class="reveal">
+                    <div class="font-mono text-sm mb-4" style="color: var(--accent);">// Experience</div>
+                    <h2 class="text-3xl font-bold mb-8">Where I've worked</h2>
+                    
+                    <div class="space-y-8">
+                        <div class="timeline-item pb-8">
+                            <div class="font-semibold mb-1">Senior Full Stack Developer</div>
+                            <div class="text-sm mb-2" style="color: var(--accent);">TechScale Inc. • 2022 - Present</div>
+                            <p class="text-sm" style="color: var(--muted);">
+                                Led development of microservices architecture serving 2M+ monthly active users. Reduced API response times by 60% through strategic caching and query optimization. Mentored team of 5 junior developers.
+                            </p>
+                        </div>
+                        
+                        <div class="timeline-item pb-8">
+                            <div class="font-semibold mb-1">Full Stack Developer</div>
+                            <div class="text-sm mb-2" style="color: var(--accent);">CloudFlow Systems • 2020 - 2022</div>
+                            <p class="text-sm" style="color: var(--muted);">
+                                Built real-time collaboration features using WebSockets. Implemented CI/CD pipelines reducing deployment time by 80%. Developed customer-facing dashboard processing $5M+ in transactions.
+                            </p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="font-semibold mb-1">Frontend Developer</div>
+                            <div class="text-sm mb-2" style="color: var(--accent);">StartupLab • 2019 - 2020</div>
+                            <p class="text-sm" style="color: var(--muted);">
+                                Developed responsive web applications for 10+ clients. Introduced component library reducing development time by 40%. First full-time engineering hire, helped scale team to 8 developers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements -->
+                <div class="reveal" style="transition-delay: 0.15s;">
+                    <div class="font-mono text-sm mb-4" style="color: var(--accent);">// Achievements</div>
+                    <h2 class="text-3xl font-bold mb-8">Key accomplishments</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--accent-dim);">
+                                    <svg class="w-5 h-5" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold mb-1">Performance Optimization</div>
+                                    <p class="text-sm" style="color: var(--muted);">Reduced page load time from 4.2s to 0.8s for e-commerce platform, resulting in 23% increase in conversions.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--accent-dim);">
+                                    <svg class="w-5 h-5" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold mb-1">Scale Architecture</div>
+                                    <p class="text-sm" style="color: var(--muted);">Designed system architecture handling 10M+ API requests daily with 99.9% uptime SLA compliance.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--accent-dim);">
+                                    <svg class="w-5 h-5" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold mb-1">Open Source Impact</div>
+                                    <p class="text-sm" style="color: var(--muted);">Maintainer of npm package with 50K+ weekly downloads. Active contributor to Next.js and React ecosystem.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--accent-dim);">
+                                    <svg class="w-5 h-5" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold mb-1">Revenue Impact</div>
+                                    <p class="text-sm" style="color: var(--muted);">Built payment integration system processing $12M+ annually with zero security incidents.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Activity Section -->
+    <section class="py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="reveal bg-[var(--card)] border border-[var(--border)] rounded-2xl p-8 md:p-12">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="font-mono text-sm mb-4" style="color: var(--accent);">// GitHub Activity</div>
+                        <h3 class="text-2xl font-bold mb-4">Active in the community</h3>
+                        <p class="mb-6" style="color: var(--muted);">
+                            I believe in giving back to the developer community. Check out my open source contributions and side projects.
+                        </p>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <div class="stat-number text-2xl font-bold">847</div>
+                                <div class="text-xs" style="color: var(--muted);">Contributions</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="stat-number text-2xl font-bold">32</div>
+                                <div class="text-xs" style="color: var(--muted);">Repositories</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="stat-number text-2xl font-bold">1.2K</div>
+                                <div class="text-xs" style="color: var(--muted);">Stars Earned</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="grid grid-cols-12 gap-1" id="github-grid">
+                            <!-- GitHub contribution grid will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24" style="background: var(--bg-elevated);">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <div class="font-mono text-sm mb-4" style="color: var(--accent);">// Get in Touch</div>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Let's build something great together</h2>
+                <p class="mb-8 text-lg" style="color: var(--muted); max-width: 500px; margin: 0 auto;">
+                    I'm currently available for freelance projects and full-time opportunities. Let's discuss how I can help bring your ideas to life.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                    <a href="mailto:alex@example.com" class="btn-primary inline-flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        alex@example.com
+                    </a>
+                    <a href="#" class="btn-secondary inline-flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+
+                <div class="flex justify-center gap-6">
+                    <a href="#" class="p-3 rounded-lg border border-[var(--border)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="LinkedIn">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="p-3 rounded-lg border border-[var(--border)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Twitter">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="p-3 rounded-lg border border-[var(--border)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Dribbble">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.628 0-12 5.373-12 12s5.372 12 12 12 12-5.373 12-12-5.372-12-12-12zm9.885 11.441c-2.575-.422-4.943-.445-7.103-.073-.244-.563-.497-1.125-.767-1.68 2.31-1 4.165-2.358 5.548-4.082 1.35 1.594 2.197 3.619 2.322 5.835zm-3.842-7.282c-1.205 1.554-2.868 2.783-4.986 3.68-1.016-1.861-2.178-3.676-3.488-5.438.779-.197 1.591-.314 2.431-.314 2.275 0 4.368.779 6.043 2.072zm-10.516-.993c1.331 1.742 2.511 3.538 3.537 5.381-2.43.715-5.331 1.082-8.684 1.105.692-2.835 2.601-5.193 5.147-6.486zm-5.44 8.834l.013-.256c3.849-.005 7.169-.448 9.95-1.322.233.475.456.952.67 1.432-3.38 1.057-6.165 3.222-8.337 6.48-1.432-1.719-2.296-3.927-2.296-6.334zm3.829 7.81c1.969-3.088 4.482-5.098 7.598-6.027.928 2.42 1.609 4.91 2.043 7.46-3.349 1.291-6.953.666-9.641-1.433zm11.586.43c-.438-2.353-1.08-4.653-1.92-6.897 1.876-.265 3.94-.196 6.199.196-.437 2.786-2.028 5.192-4.279 6.701z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-[var(--border)]">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="font-mono text-sm" style="color: var(--muted);">
+                    <span style="color: var(--accent);">©</span> 2024 Alex Chen. All rights reserved.
+                </div>
+                <div class="flex gap-6 text-sm" style="color: var(--muted);">
+                    <a href="#" class="hover:text-[var(--fg)] transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-[var(--fg)] transition-colors">Terms</a>
+                    <a href="#" class="hover:text-[var(--fg)] transition-colors">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Project data
+        const projects = [
+            {
+                title: "ScaleFlow Dashboard",
+                description: "Enterprise analytics platform processing real-time data streams for financial institutions.",
+                problem: "Legacy system couldn't handle increasing data volume, causing 15-minute reporting delays during peak hours.",
+                solution: "Built microservices architecture with event-driven design using Kafka, optimized PostgreSQL queries, implemented Redis caching layer.",
+                impact: "Reduced report generation from 15min to 3sec. Handles 500K events/minute. 99.9% uptime achieved.",
+                tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Kafka", "AWS"],
+                image: "dashboard",
+                demo: "#",
+                github: "#"
+            },
+            {
+                title: "CollabSpace",
+                description: "Real-time collaboration platform for distributed teams with video, chat, and document editing.",
+                problem: "Remote teams struggled with fragmented tools, leading to 40% productivity loss and communication gaps.",
+                solution: "Unified platform with WebRTC video, WebSocket real-time sync, CRDT-based document collaboration.",
+                impact: "10K+ active teams. 60% reduction in app-switching. Average session time 4.2 hours.",
+                tech: ["React", "TypeScript", "WebRTC", "MongoDB", "Socket.io", "Vercel"],
+                image: "collab",
+                demo: "#",
+                github: "#"
+            },
+            {
+                title: "PayGate Integration",
+                description: "PCI-DSS compliant payment processing system for e-commerce platforms.",
+                problem: "Merchant checkout abandonment rate of 68% due to complex multi-step payment flow.",
+                solution: "Streamlined single-page checkout with smart card detection, instant validation, and multiple payment methods.",
+                impact: "Abandonment reduced to 31%. $12M+ processed annually. Zero security incidents.",
+                tech: ["Vue.js", "Express", "PostgreSQL", "Stripe API", "Docker", "AWS"],
+                image: "payment",
+                demo: "#",
+                github: "#"
+            },
+            {
+                title: "DevMetrics CLI",
+                description: "Open-source developer productivity toolkit for engineering teams.",
+                problem: "Engineering managers lacked visibility into code quality trends and technical debt accumulation.",
+                solution: "CLI tool analyzing git history, CI/CD metrics, and code complexity with actionable insights.",
+                impact: "50K+ npm weekly downloads. Used by 200+ companies. Featured in Node.js weekly.",
+                tech: ["TypeScript", "Node.js", "SQLite", "GraphQL", "GitHub API"],
+                image: "cli",
+                demo: "#",
+                github: "#"
+            }
+        ];
+
+        // Render projects
+        function renderProjects() {
+            const container = document.getElementById('projects-container');
+            if (!container) return;
+            
+            container.innerHTML = projects.map((project, index) => `
+                <div class="reveal project-card rounded-2xl overflow-hidden" style="transition-delay: ${index * 0.1}s;">
+                    <div class="grid lg:grid-cols-2">
+                        <div class="aspect-video lg:aspect-auto img-placeholder">
+                            <div class="w-full h-full flex items-center justify-center">
+                                <svg class="w-16 h-16" style="color: var(--muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6 lg:p-8">
+                            <div class="flex items-start justify-between gap-4 mb-4">
+                                <h3 class="text-xl font-bold">${project.title}</h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <a href="${project.demo}" class="text-xs px-3 py-1.5 rounded-md border border-[var(--border)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">Live Demo</a>
+                                    <a href="${project.github}" class="text-xs px-3 py-1.5 rounded-md border border-[var(--border)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">Code</a>
+                                </div>
+                            </div>
+                            <p class="text-sm mb-4" style="color: var(--muted);">${project.description}</p>
+                            
+                            <div class="space-y-3 mb-4">
+                                <div class="text-xs">
+                                    <span style="color: var(--accent);">Problem:</span>
+                                    <span style="color: var(--muted);">${project.problem}</span>
+                                </div>
+                                <div class="text-xs">
+                                    <span style="color: var(--accent);">Solution:</span>
+                                    <span style="color: var(--muted);">${project.solution}</span>
+                                </div>
+                                <div class="text-xs">
+                                    <span style="color: var(--accent);">Impact:</span>
+                                    <span style="color: var(--muted);">${project.impact}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                ${project.tech.map(t => `<span class="tech-badge text-xs">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // GitHub grid
+        function renderGithubGrid() {
+            const grid = document.getElementById('github-grid');
+            if (!grid) return;
+            
+            const weeks = 52;
+            const daysPerWeek = 7;
+            
+            for (let week = 0; week < weeks; week++) {
+                for (let day = 0; day < daysPerWeek; day++) {
+                    const level = Math.floor(Math.random() * 5);
+                    const colors = [
+                        'var(--bg-elevated)',
+                        'rgba(0, 212, 170, 0.2)',
+                        'rgba(0, 212, 170, 0.4)',
+                        'rgba(0, 212, 170, 0.6)',
+                        'rgba(0, 212, 170, 0.8)'
+                    ];
+                    const cell = document.createElement('div');
+                    cell.className = 'w-3 h-3 rounded-sm';
+                    cell.style.background = colors[level];
+                    cell.style.transition = 'transform 0.2s ease';
+                    cell.addEventListener('mouseenter', () => {
+                        cell.style.transform = 'scale(1.3)';
+                    });
+                    cell.addEventListener('mouseleave', () => {
+                        cell.style.transform = 'scale(1)';
+                    });
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        // Particles
+        function initParticles() {
+            const canvas = document.getElementById('particles');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let animationId = null;
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            function createParticles() {
+                particles = [];
+                const numParticles = Math.min(80, Math.floor((canvas.width * canvas.height) / 20000));
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        radius: Math.random() * 2 + 1,
+                        opacity: Math.random() * 0.5 + 0.1
+                    });
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, Math.max(0.5, p.radius), 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 212, 170, ${p.opacity})`;
+                    ctx.fill();
+                    
+                    // Connect nearby particles
+                    particles.slice(i + 1).forEach(p2 => {
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(0, 212, 170, ${0.1 * (1 - dist / 120)})`;
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // Check for reduced motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            
+            if (!prefersReducedMotion) {
+                resize();
+                createParticles();
+                animate();
+                
+                window.addEventListener('resize', () => {
+                    resize();
+                    createParticles();
+                });
+            }
+        }
+
+        // Scroll reveal
+        function initScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            reveals.forEach(el => observer.observe(el));
+        }
+
+        // Theme toggle
+        function initThemeToggle() {
+            const toggle = document.getElementById('theme-toggle');
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('sun-icon');
+            
+            if (!toggle || !moonIcon || !sunIcon) return;
+            
+            toggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                moonIcon.classList.toggle('hidden');
+                sunIcon.classList.toggle('hidden');
+            });
+        }
+
+        // Mobile menu
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            
+            if (!btn || !menu) return;
+            
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+            
+            // Close menu on link click
+            menu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        }
+
+        // Typing animation
+        function initTyping() {
+            const typingEl = document.getElementById('typing-text');
+            if (!typingEl) return;
+            
+            const texts = [
+                'Ready for new challenges...',
+                'Building the future, one line at a time.',
+                'Let\'s create something amazing.'
+            ];
+            
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            
+            function type() {
+                const currentText = texts[textIndex];
+                
+                if (isDeleting) {
+                    typingEl.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typingEl.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                let delay = isDeleting ? 30 : 50;
+                
+                if (!isDeleting && charIndex === currentText.length) {
+                    delay = 2000;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length;
+                    delay = 500;
+                }
+                
+                setTimeout(type, delay);
+            }
+            
+            // Check for reduced motion
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) {
+                type();
+            } else {
+                typingEl.textContent = texts[0];
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProjects();
+            renderGithubGrid();
+            initParticles();
+            initScrollReveal();
+            initThemeToggle();
+            initMobileMenu();
+            initTyping();
+        });
+    </script>
+</body>
+</html>
